@@ -1,7 +1,7 @@
 {
   "name": "mother-of-help-ngo-backend",
   "version": "0.0.1",
-  "description": "",
+  "description": "Backend API for Mother of Help NGO",
   "author": "",
   "private": true,
   "license": "UNLICENSED",
