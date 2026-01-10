@@ -1,8 +1,10 @@
+// src/routes/company.routes.js
 const express = require("express");
-const router = express.Router();
-const auth = require("../middleware/auth.middleware");
-const { getMyCompany } = require("../controllers/company.controller");
+const { getCompanyFellows, assignFellow } = require("../controllers/company.controller");
+const { auth } = require("../middleware/auth");
 
-router.get("/me", auth(["SME"]), getMyCompany);
+const router = express.Router();
+router.get("/fellows", auth(["COMPANY"]), getCompanyFellows);
+router.post("/assign", auth(["COMPANY"]), assignFellow);
 
 module.exports = router;
