@@ -1,13 +1,19 @@
-const Fellow = require("../models/Fellow");
+// src/controllers/fellow.controller.js
+const pool = require("../db");
 
-exports.getMyProfile = async (req, res) => {
-  const fellow = await Fellow
-    .findOne({ user: req.user.id })
-    .populate("user", "-passwordHash");
-
-  if (!fellow) {
-    return res.status(404).json({ error: "Fellow profile not found" });
+const getFellowCompany = async (req, res) => {
+  try {
+    const fellowResult = await pool.query(
+      `SELECT c.* FROM fellow_profiles f 
+       JOIN company_profiles c ON f.assigned_company_id = c.id 
+       WHERE f.user_id = $1`,
+      [req.user.id]
+    );
+    res.json(fellowResult.rows[0] || null);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
   }
-
-  res.json(fellow);
 };
+
+module.exports = { getFellowCompany };

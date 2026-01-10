@@ -1,16 +1,16 @@
 const express = require("express");
-const router = express.Router();
-const auth = require("../middleware/auth.middleware");
-const {
-  getAllUsers,
-  getAllFellows,
-  getAllCompanies,
-  mergeFellowToCompany,
-} = require("../controllers/admin.controller");
+const { registerAdmin , getAllCompanies , getAllFellows } = require("../controllers/auth.controller");
+const { auth } = require("../middleware/auth");
+const { matchFellowsToCompanies } = require("../controllers/admin.controller");
 
-router.get("/users", auth(["ADMIN"]), getAllUsers);
-router.get("/fellows", auth(["ADMIN"]), getAllFellows);
+const router = express.Router();
+
+// Only admins can create admins
+router.post("/register", auth(["ADMIN"]), registerAdmin);
 router.get("/companies", auth(["ADMIN"]), getAllCompanies);
-router.post("/merge", auth(["ADMIN"]), mergeFellowToCompany);
+router.get("/fellows", auth(["ADMIN"]), getAllFellows);
+router.post("/match-fellows", auth(["ADMIN"]), matchFellowsToCompanies);
+
 
 module.exports = router;
+
