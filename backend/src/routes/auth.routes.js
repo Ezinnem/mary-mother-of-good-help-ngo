@@ -1,14 +1,9 @@
+// src/routes/auth.routes.js
 const express = require("express");
-const router = express.Router();
-const auth = require("../middleware/auth.middleware");
-const {
-  getAllUsers,
-  getAllFellows,
-  getAllCompanies,
-} = require("../controllers/admin.controller");
+const { registerUser, loginUser } = require("../controllers/auth.controller");
 
-router.get("/users", auth(["ADMIN"]), getAllUsers);
-router.get("/fellows", auth(["ADMIN"]), getAllFellows);
-router.get("/companies", auth(["ADMIN"]), getAllCompanies);
+const router = express.Router();
+router.post("/register", registerUser);
+router.post("/login", loginUser);
 
 module.exports = router;

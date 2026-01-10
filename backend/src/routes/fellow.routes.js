@@ -1,8 +1,9 @@
+// src/routes/fellow.routes.js
 const express = require("express");
-const router = express.Router();
-const auth = require("../middleware/auth.middleware");
-const { getMyProfile } = require("../controllers/fellow.controller");
+const { getFellowCompany } = require("../controllers/fellow.controller");
+const { auth } = require("../middleware/auth");
 
-router.get("/me", auth(["FELLOW"]), getMyProfile);
+const router = express.Router();
+router.get("/company", auth(["FELLOW"]), getFellowCompany);
 
 module.exports = router;
